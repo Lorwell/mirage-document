@@ -1,0 +1,92 @@
+{
+  "author": "思追（shaco）",
+  "description": "思追（shaco）的学习空间",
+  "title": "思追（shaco）",
+  "language": "zh-hans",
+  "structure": {
+    "readme": "README.md"
+  },
+  "extension": null,
+  "generator": "site",
+  "isbn": "",
+  "links": {
+    "sharing": {
+      "all": null,
+      "facebook": null,
+      "google": null,
+      "twitter": null,
+      "weibo": null
+    }
+  },
+  "output": null,
+  "pdf": {
+    "fontSize": 12,
+    "footerTemplate": null,
+    "headerTemplate": null,
+    "margin": {
+      "bottom": 36,
+      "left": 62,
+      "right": 62,
+      "top": 36
+    },
+    "pageNumbers": true,
+    "paperSize": "a4"
+  },
+  "plugins": [
+    "code",
+    "popup",
+    "local-pagefooter",
+    "favicon",
+    "search-plus",
+    "hide-element",
+    "splitter",
+    "flexible-alerts",
+    "intopic-toc",
+    "-lunr",
+    "-search",
+    "-sharing",
+    "sharing-plus"
+  ],
+  "pluginsConfig": {
+    "intopic-toc": {
+      "label": "大纲",
+      "mode": "nested",
+      "isCollapsed": false
+    },
+    "flexible-alerts": {
+      "style": "callout",
+      "comment": {
+        "label": "Comment",
+        "icon": "fa fa-comments",
+        "className": "info"
+      }
+    },
+    "hide-element": {
+      "elements": [
+        ".gitbook-link"
+      ]
+    },
+    "local-pagefooter": {
+      "copyright": "Copyright © 思追（shaco） 2022",
+      "islocal": true,
+      "modify_label": "文章修订时间: ",
+      "modify_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    "fontsettings": {
+      "theme": "white",
+      "family": "sans",
+      "size": 2
+    },
+    "sharing": {
+      "all": [
+        "facebook",
+        "google",
+        "linkedin",
+        "twitter",
+        "weibo",
+        "qq"
+      ]
+    }
+  },
+  "variables": {}
+}
