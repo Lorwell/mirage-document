@@ -1,7 +1,7 @@
 {
-  "author": "思追（shaco）",
-  "description": "思追（shaco）的学习空间",
-  "title": "思追（shaco）",
+  "author": "mirage",
+  "description": "mirage文档",
+  "title": "mirage",
   "language": "zh-hans",
   "structure": {
     "readme": "README.md"
@@ -67,7 +67,7 @@
       ]
     },
     "local-pagefooter": {
-      "copyright": "Copyright © 思追（shaco） 2022",
+      "copyright": "Copyright © mirage 2022",
       "islocal": true,
       "modify_label": "文章修订时间: ",
       "modify_format": "YYYY-MM-DD HH:mm:ss"
