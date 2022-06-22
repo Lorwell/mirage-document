@@ -80,8 +80,6 @@ fun main(args: Array<String>) {
 
 > `@MirageApplication`和`MirageBootApplication`本质上等于`@SpringBootApplication`和`SpringApplication`，mirage 定义了自己的注解以方便后续拓展使用
 
-即可以以一个最小化方式的启动
-
 如果你使用`kotlin`那么你还需要添加以下依赖，以获得对 `kotlin`的支持
 
 ```xml
