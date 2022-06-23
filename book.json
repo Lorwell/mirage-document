@@ -50,8 +50,12 @@
   "pluginsConfig": {
     "intopic-toc": {
       "label": "大纲",
+      "selector": ".markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4, .markdown-section h5, .markdown-section h6",
       "mode": "nested",
-      "isCollapsed": false
+      "maxDepth": 6,
+      "visible": true,
+      "isCollapsed": false,
+      "isScrollspyActive": true
     },
     "flexible-alerts": {
       "style": "callout",
