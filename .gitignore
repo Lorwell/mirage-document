@@ -20,4 +20,4 @@ buildNumber.properties
 *.ipr
 
 # 忽略编译的执行引擎jar
-HDSchedule-executor-engine.jar
+node_modules/
