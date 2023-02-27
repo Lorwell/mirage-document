@@ -1,23 +1,5 @@
-target/
-log/
-log.log
-transaction-logs/
 
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
-.mvn/wrapper/maven-wrapper.jar
-
-### IntelliJ IDEA ###
-.idea/
-*.iws
-*.iml
-*.ipr
-
-# 忽略编译的执行引擎jar
 node_modules/
+src/.vuepress/.cache/
+src/.vuepress/.temp/
+src/.vuepress/dist/
