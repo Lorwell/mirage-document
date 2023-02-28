@@ -1,110 +1,104 @@
 ---
 home: true
 icon: home
-title: Project home
+title: Mirage
 heroImage: /logo.svg
-heroText: Project name
-tagline: You can place the description of the project here.
+heroText: Mirage
+tagline: Mirage 使 Vertx 变得更简单
 actions:
-  - text: How to Use 💡
-    link: /demo/
+  - text: 快速开始 💡
+    link: /guide
     type: primary
 
-  - text: Docs
-    link: /guide/
-
 features:
-  - title: Markdown Enhance
-    icon: markdown
-    details: Add align, sup/sub script, footnote, tasklist, tex, flowchart, diagram, mark and presentation support in markdown
-    link: https://theme-hope.vuejs.press/guide/markdown/
+  - title: Kotlin
+    details: 支持 kotlin 构建基于协程的响应式应用
 
-  - title: Slide page
-    icon: slides
-    details: Adding slide pages to display things you like
-    link: https://theme-hope.vuejs.press/guide/layout/slides.html
+  - title: IOC
+    details: 依赖注入使构建大型应用变得简单
 
-  - title: Layout enhancement
-    icon: layout
-    details: Adding breadcrumb, footer, improved navbar, improved page nav and etc.
-    link: https://theme-hope.vuejs.press/guide/layout/
+  - title: 环境配置
+    details: 多种应用环境配置方式和热更新使配置变更无需停机重新部署
 
-  - title: Pageviews and comments
-    icon: comment
-    details: Start pageview statistics and comment support with Waline
-    link: https://theme-hope.vuejs.press/guide/feature/comment.html
-
-  - title: Article information
-    icon: info
-    details: Add author, writing date, reading time, word count and other information to your article
-    link: https://theme-hope.vuejs.press/guide/feature/page-info.html
-
-  - title: Blog support
-    icon: blog
-    details: Listing your articles with their dates, tags and categories with some awesome layouts
-    link: https://theme-hope.vuejs.press/guide/blog/
-
-  - title: Custom theme color
-    icon: palette
-    details: Supports custom theme colors and allows users to switch between preset theme colors
-    link: https://theme-hope.vuejs.press/guide/interface/theme-color.html
-
-  - title: Dark Mode
-    icon: contrast
-    details: Switch between light and dark modes freely
-    link: https://theme-hope.vuejs.press/guide/interface/darkmode.html
-
-  - title: Full A11y support
-    icon: support
-    details: Full support of accessibility in your site
-    link: https://theme-hope.vuejs.press/guide/interface/accessibility.html
-
-  - title: Article Encryption
-    icon: lock
-    details: Encrypt you articles based on page links, so that only the one you want could see them
-    link: https://theme-hope.vuejs.press/guide/feature/encrypt.html
-
-  - title: Copy button
-    icon: copy
-    details: Copy codes with one click in code blocks
-    link: https://theme-hope.vuejs.press/guide/feature/copy-code.html
-
-  - title: Image preview
-    icon: pic
-    details: Support viewing, zooming, sharing your page images like a gallery
-    link: https://theme-hope.vuejs.press/guide/feature/photo-swipe.html
-
-  - title: SEO enhancement
-    icon: config
-    details: Optimize pages for search engines
-    link: https://theme-hope.vuejs.press/guide/advanced/seo.html
-
-  - title: Sitemap
-    icon: sitemap
-    details: Generate a Sitemap for your site
-    link: https://theme-hope.vuejs.press/guide/advanced/sitemap.html
-
-  - title: Feed support
-    icon: rss
-    details: Generate feed to allow users to subscribe it
-    link: https://theme-hope.vuejs.press/guide/advanced/feed.html
-
-  - title: PWA support
-    icon: mobile
-    details: Make your site more like an APP
-    link: https://theme-hope.vuejs.press/guide/advanced/pwa.html
-
-  - title: More new features
-    icon: more
-    details: Including icon support, fullscreen button, etc.
-    link: https://theme-hope.vuejs.press/guide/feature/
+  - title: 事件驱动
+    details: 与业务事件结合，实时响应事情消息
 
 copyright: false
-footer: Theme by <a href="https://theme-hope.vuejs.press/" target="_blank">VuePress Theme Hope</a> | MIT Licensed, Copyright © 2019-present Mr.Hope
+footer: Apache 2.0 Licensed, Copyright © 思追(shaco)
 ---
 
-This is an example of a project homepage. You can place your main content here.
+## 🛠 安装
 
-To use this layout, you need to set `home: true` in the page front matter.
+在你的pom中添加以下依赖管理配置
 
-For related descriptions of configuration items, please see [Project HomePage Layout Config](https://theme-hope.vuejs.press/guide/layout/home/).
+```xml
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>cc.shacocloud</groupId>
+            <artifactId>mirage-dependencies</artifactId>
+            <version>${mirage.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+```
+
+最新版本：https://s01.oss.sonatype.org/content/repositories/snapshots/cc/shacocloud/mirage-dependencies/
+
+如果你需要使用 SNAPSHOT 相关版本，请使用以下存储库（SNAPSHOT 版本不提交到中央库）：
+
+```xml
+<repositories>
+    <repository>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+            <checksumPolicy>warn</checksumPolicy>
+        </snapshots>
+        <id>ossrh</id>
+        <name>ossrh</name>
+        <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+    </repository>
+</repositories>
+```
+
+## 🚀 快速启动
+
+在你的pom中添加以下依赖
+
+```xml
+<dependency>
+    <groupId>cc.shacocloud</groupId>
+    <artifactId>mirage-starter</artifactId>
+</dependency>
+```
+
+::: code-tabs#language
+
+@tab kotlin
+
+```kotlin
+@MirageBootApplication
+class Application
+
+fun main(args: Array<String>) {
+    MirageApplication.run(Application::class.java, *args)
+}
+```
+
+@tab java
+
+```java
+@MirageBootApplication
+public class Application {
+
+    public static void main(String[] args) {
+        MirageApplication.run(Application.class,args);
+    }
+
+}
+```
+
+::: 
