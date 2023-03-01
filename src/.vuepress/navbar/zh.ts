@@ -4,8 +4,12 @@ export const zhNavbar = navbar([
     "/",
     {
         text: "项目",
-        prefix: "/projects/",
+        prefix: "/zh/",
         children: [
+            {
+                text: "Mirage Framework",
+                link: "framework/",
+            },
             {
                 text: "Mirage Restful",
                 link: "restful/",

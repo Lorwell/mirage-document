@@ -9,20 +9,8 @@ export const zhSidebar = sidebar({
         },
         {
             text: "文档",
-            prefix: "guide/",
-            children: [
-                "",
-                {
-                    text: "Mirage Core",
-                    prefix: "core/",
-                    children: "structure"
-                },
-                {
-                    text: "Mirage Restful",
-                    prefix: "restful/",
-                    children: "structure"
-                }
-            ],
+            prefix: "zh/",
+            children: "structure"
         },
     ],
 });
