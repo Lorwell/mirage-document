@@ -13,6 +13,10 @@ export const zhNavbar = navbar([
             {
                 text: "Mirage Restful",
                 link: "restful/",
+            },
+            {
+                text: "Mirage ORM",
+                link: "orm/",
             }
         ],
     },
