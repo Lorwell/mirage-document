@@ -11,6 +11,10 @@ export default defineUserConfig({
             description: "Mirage 的使用文档",
         },
     },
-
+    markdown: {
+        headers: {
+            level: [2, 3, 4]
+        }
+    },
     theme,
 });

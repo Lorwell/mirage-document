@@ -4,7 +4,7 @@ import {zhSidebar} from "./sidebar";
 
 export default hopeTheme({
     hostname: "https://vuepress-theme-hope-docs-demo.netlify.app",
-
+    headerDepth: 3,
     author: {
         name: "思追(shaco)",
         url: "https://blog.shacocloud.cc/",

@@ -14,9 +14,9 @@ Mirage 是 海市蜃楼 的英文翻译，为什么起这个名称呢？是因�
 
 Mirage 使 Vertx 变得更简单，为 Vertx 提供构建大型应用的基础框架，针对不同组件基于 `约定大于配置`的方式进行集成，提供简单的使用方式
 
-* [核心框架模块](/zh/framework)
-* [restful 模块](/zh/restful)
-* [orm 模块](/zh/orm)
+* [framework](/zh/framework)
+* [restful](/zh/restful)
+* [orm](/zh/orm)
 * 等等...
 
 ## 安装
@@ -55,3 +55,4 @@ Mirage 使 Vertx 变得更简单，为 Vertx 提供构建大型应用的基础�
     </repository>
 </repositories>
 ```
+
