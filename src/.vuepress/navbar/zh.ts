@@ -4,7 +4,7 @@ export const zhNavbar = navbar([
     "/",
     {
         text: "项目",
-        prefix: "/zh/",
+        prefix: "/zh/v2.0.x/",
         children: [
             {
                 text: "Mirage Framework",

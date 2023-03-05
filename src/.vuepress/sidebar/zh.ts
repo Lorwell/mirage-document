@@ -9,7 +9,7 @@ export const zhSidebar = sidebar({
         },
         {
             text: "文档",
-            prefix: "zh/",
+            prefix: "zh/v2.0.x/",
             children: "structure"
         },
     ],

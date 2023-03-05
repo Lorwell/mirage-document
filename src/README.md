@@ -7,7 +7,7 @@ heroText: Mirage
 tagline: Mirage 使 Vertx 变得更简单
 actions:
   - text: 快速开始 💡
-    link: /zh
+    link: /zh/v2.0.x/
     type: primary
 
 features:
