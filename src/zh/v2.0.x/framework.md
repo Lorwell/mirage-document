@@ -51,6 +51,12 @@ public class Application {
 
 ## 应用对象工厂
 
+::: info
+
+mirage 的对象工厂，完全兼容 JSR 303的依赖注入规范
+
+:::
+
 应用对象工厂，即 IOC（控制反转）+ DI（依赖注入）
 
 即对象的创建，依赖注入的过程都将由对象工厂来完成，那么开发需要做的是在需要对象工厂管理的对象上使用指定注解来标识，这样在应用启动时，会自动扫描这些类并且加载到工厂中进行管理
@@ -153,6 +159,10 @@ public class TestConfiguration {
 默认情况下使用 `@Component` 或 `@Bean` 注解标识的对象都是懒加载的，即什么时候第一次使用则什么时候加载，如果不是懒加载对象，那么将在应用工厂所有的类型扫描完成后，进行实例化。
 :::
 
+### 工厂对象扫描
+
+默认情况下，优先扫描启动类的包路径及其子路径中所有定义的工厂对象，接着将加载 [SPI 机制](#spi-机制) 中的自动装配对象，如果扫描到该对象还标识着 `@ComponentScan` 注解，则基于该注解定义的路径继续扫描。
+
 ### 对象生命周期
 
 ::: info 作用域
@@ -171,7 +181,7 @@ public class TestConfiguration {
 graph TB
 
 A(实例化)
-B(属性注入)
+B(依赖注入)
 C(初始化)
 D(销毁)
 E(BeanPostProcessor)
@@ -188,15 +198,15 @@ E----G
 
 #### 实例化
 
-对象的实例化是通过构造函数完成的，那么如果该对象只存在一个构造函数，则使用它，如果该对象存在多个构造函数，那么存在一个判断逻辑，**构造函数必须的`public`的且必须标识 `@Inject` 或者 `@Autowired`注解**，如果匹配到多个那么将抛出例外！
+对象的实例化是通过构造函数完成的，那么如果该对象只存在一个构造函数（无论是否私有），则使用它，如果该对象存在多个构造函数，那么存在一个判断逻辑，**构造函数必须的`public`的且必须标识 `@Inject` 或者 `@Autowired`注解**，如果匹配到多个那么将抛出例外！
 
 ::: warning 循环依赖
-请注意，当前版本不尝试解决任何形态的循环注入问题，即不可以 A实例是B实例的依赖性，同时B实例又是A实例的依赖项。这样的情况将导致获取该实例对象时抛出`BeanException`异常！
+请注意，当前版本不尝试解决任何形式的循环注入问题，即不可以 A实例是B实例的依赖性，同时B实例又是A实例的依赖项。这样的情况将导致获取该实例对象时抛出`BeanException`异常！
 :::
 
-#### 属性注入
+#### 依赖注入
 
-属性注入分为两种，对象属性注入和对象方法注入。
+依赖注入分为两种，对象属性注入和对象方法注入。
 
 对象属性注入条件：
 
@@ -210,6 +220,16 @@ E----G
 * public 标识的方法
 * 方法是上使用 `@Inject` 或 `@Autowired`注解
 * 非被重写的方法
+
+::: info 依赖名称注入
+
+默认情况下依赖注入使用类型注入，如果出现多个匹配的类型将抛出例外！
+
+如果需要通过名称进行注入，则需要使用 `@Named`注解定义注入对象的名称。
+
+如果你想为指定对象标识一个类型，通过它来完成依赖注入，可以参考 `jakarta.inject.Qualifier`，通过自定义注解的方式匹配工厂对象
+
+:::
 
 #### 初始化
 
@@ -244,11 +264,61 @@ E----G
 
 :::
 
-:::info
+::: info
 
-mirage 的对象工厂，完全兼容 JSR 303的依赖注入规范
+`BeanPostProcessor` 的对象配置基于 [SPI 机制](#spi-机制) 实现
 
 :::
+
+### 工厂对象覆盖
+
+mirage 使用约定大于配置的方式构建应用，那么在一些场景上，可能不太满足，这个时候需要将原有对象排除使用自定义的注入对象，为此我们提供了以下两种方式
+
+#### 条件覆盖
+
+条件覆盖通过在定义工厂对象上标识 `@Conditional` 注解的方式来完成，`@Conditional#value` 属性为 `Condition`接口类型，实现该接口定义工厂对象条件覆盖的具体逻辑即可。
+
+需要注意的是 `Condition` 的实现对象，必须提供一个无参构造函数，否则将无法初始化该对象。
+
+mirage 内部提供了一些 `@Conditional` 的实现，可以使用以下注解
+
+* `@ConditionalOnClass` ：当存在指定类时加载
+* `@ConditionalOnMissingBean`：当不存在指定的对象，那么将当前对象添加到对象工厂中
+
+#### 对象排除
+
+对象排除一般来说不建议使用，我们更加建议通过条件覆盖的方式。
+
+如果必须要使用对象排除，则需要使用 `@ExcludeComponent` 注解定义排除的对象类型或者对象名称，也可以通过 [SPI 机制](#spi-机制) 排除指定类型
+
+::: warning 排除对象
+
+需要注意的是：如果该对象已经完成了初始化，那么该对象就无法被排除
+
+:::
+
+### SPI 机制
+
+mirage 的 SPI 机制通过在资源目录下定义 ` META-INF\mirageFactories.properties ` 配置文件的方式，以下是一份参考
+
+```properties
+# 自动装配的类
+factories.autoConfiguration=\
+  cc.shacocloud.mirage.context.MirageVertxConfiguration,\
+  cc.shacocloud.mirage.context.MirageVertxProperties,\
+  cc.shacocloud.mirage.context.restful.MirageRestfulConfigProperties,\
+  cc.shacocloud.mirage.context.restful.MirageRestfulConfiguration
+# bean 的后置处理器
+factories.beanPostProcessor=
+# 排除的组件
+factories.excludeComponent=
+```
+
+如上所示，通过全类名的方式定义，多个英文半角逗号分割
+
+* factories.autoConfiguration：为自动装配的一些类
+* factories.beanPostProcessor：为 `BeanPostProcessor` 的实现接口
+* factories.excludeComponent：为需要排除的对象类型
 
 ## 应用环境配置
 
