@@ -156,20 +156,20 @@ public class TestConfiguration {
 :::
 
 ::: info 懒加载
-默认情况下使用 `@Component` 或 `@Bean` 注解标识的对象都是懒加载的，即什么时候第一次使用则什么时候加载，如果不是懒加载对象，那么将在应用工厂所有的类型扫描完成后，进行实例化。
+默认情况下工厂对象都是懒加载的，如果需要定义非懒加载对象可以通过 `@Component(lazy = false)` 或者 `@Bean(lazy = false)` 来定义，非懒加载对象将在应用工厂所有的类型扫描完成后，进行实例化。
 :::
 
 ### 工厂对象扫描
 
-默认情况下，优先扫描启动类的包路径及其子路径中所有定义的工厂对象，接着将加载 [SPI 机制](#spi-机制) 中的自动装配对象，如果扫描到该对象还标识着 `@ComponentScan` 注解，则基于该注解定义的路径继续扫描。
+默认情况下，优先扫描**启动类的包路径及其子路径中所有定义的工厂对象**，接着将加载 [SPI 机制](#spi-机制) 中的自动装配对象，如果扫描到对象标识着 `@ComponentScan` 注解，则基于该注解定义的路径继续扫描。
 
 ### 对象生命周期
 
 ::: info 作用域
 
-这里值得一提的是，被对象工厂管理的实例，它的作用域一定是单例的，对于 **原型对象**对象工厂每次都会创建一个对象，创建好后将不会继续管理后续的生命周期，即 对象工厂不会参与原型对象的销毁过程
+这里值得一提的是，被对象工厂管理的实例，它的作用域一定是单例的，对于 **原型对象**对象，即：工厂每次都会创建一个对象，创建好后将不会继续管理后续的生命周期，交由使用者进行管理。
 
-默认情况下对象实例都是 `@Singleton`的，如果需要原型对象则在定义工厂对象时，额外使用 `@Prototype`注解标识
+如果需要定义原型对象则需要额外使用 `@Prototype`注解标识
 
 :::
 
@@ -266,7 +266,7 @@ E----G
 
 ::: info
 
-`BeanPostProcessor` 的对象配置基于 [SPI 机制](#spi-机制) 实现
+`BeanPostProcessor` 的对象配置基于 [SPI 机制](#spi-机制) 实现，也被视为对象工厂中的对象，在此我们建议 `BeanPostProcessor` 不要存在对象依赖，因为这将导致这些依赖对象的创建时机被提到 `BeanPostProcessor` 之前
 
 :::
 
@@ -305,11 +305,7 @@ mirage 的 SPI 机制通过在资源目录下定义 ` META-INF\mirageFactories.p
 # 自动装配的类
 factories.autoConfiguration=\
   cc.shacocloud.mirage.context.MirageVertxConfiguration,\
-  cc.shacocloud.mirage.context.MirageVertxProperties,\
-  cc.shacocloud.mirage.context.restful.MirageRestfulConfigProperties,\
-  cc.shacocloud.mirage.context.restful.MirageRestfulConfiguration
-# bean 的后置处理器
-factories.beanPostProcessor=
+  cc.shacocloud.mirage.context.MirageVertxProperties
 # 排除的组件
 factories.excludeComponent=
 ```
@@ -317,7 +313,6 @@ factories.excludeComponent=
 如上所示，通过全类名的方式定义，多个英文半角逗号分割
 
 * factories.autoConfiguration：为自动装配的一些类
-* factories.beanPostProcessor：为 `BeanPostProcessor` 的实现接口
 * factories.excludeComponent：为需要排除的对象类型
 
 ## 应用环境配置

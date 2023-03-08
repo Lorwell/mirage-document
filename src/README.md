@@ -41,53 +41,7 @@ copyright: false
 footer: Apache 2.0 Licensed, Copyright © 思追(shaco)
 ---
 
-## 🛠 安装
-
-在你的pom中添加以下依赖管理配置
-
-```xml
-<dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>cc.shacocloud</groupId>
-            <artifactId>mirage-dependencies</artifactId>
-            <version>${mirage.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-    </dependencies>
-</dependencyManagement>
-```
-
-最新版本：https://s01.oss.sonatype.org/content/repositories/snapshots/cc/shacocloud/mirage-dependencies/
-
-如果你需要使用 SNAPSHOT 相关版本，请使用以下存储库（SNAPSHOT 版本不提交到中央库）：
-
-```xml
-<repositories>
-    <repository>
-        <snapshots>
-            <enabled>true</enabled>
-            <updatePolicy>always</updatePolicy>
-            <checksumPolicy>warn</checksumPolicy>
-        </snapshots>
-        <id>ossrh</id>
-        <name>ossrh</name>
-        <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
-    </repository>
-</repositories>
-```
-
-## 🚀 快速启动
-
-在你的pom中添加以下依赖
-
-```xml
-<dependency>
-    <groupId>cc.shacocloud</groupId>
-    <artifactId>mirage-starter</artifactId>
-</dependency>
-```
+##  🚀 快速启动
 
 ::: code-tabs#language
 

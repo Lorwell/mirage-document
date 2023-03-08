@@ -21,9 +21,19 @@ Mirage 使 Vertx 变得更简单，为 Vertx 提供构建大型应用的基础�
 
 ## 安装
 
+需要的最低JDK依赖为 JDK 11
+
 在你的pom中添加以下依赖管理配置
 
 ```xml
+<properties>
+     <!-- 环境设置 -->
+     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+     <java.version>11</java.version>
+</properties>
+
+<!-- mirage 的依赖管理 -->
 <dependencyManagement>
     <dependencies>
         <dependency>
@@ -35,6 +45,22 @@ Mirage 使 Vertx 变得更简单，为 Vertx 提供构建大型应用的基础�
         </dependency>
     </dependencies>
 </dependencyManagement>
+
+    <build>
+        <plugins>
+            <!-- Compiler 插件, 设定 JDK 版本 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <showWarnings>true</showWarnings>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 ```
 
 最新版本：https://s01.oss.sonatype.org/content/repositories/snapshots/cc/shacocloud/mirage-dependencies/
@@ -56,3 +82,41 @@ Mirage 使 Vertx 变得更简单，为 Vertx 提供构建大型应用的基础�
 </repositories>
 ```
 
+## 快速启动
+
+在你的pom中添加以下依赖
+
+```xml
+<dependency>
+    <groupId>cc.shacocloud</groupId>
+    <artifactId>mirage-starter</artifactId>
+</dependency>
+```
+
+::: code-tabs#language
+
+@tab kotlin
+
+```kotlin
+@MirageBootApplication
+class Application
+
+fun main(args: Array<String>) {
+    MirageApplication.run(Application::class.java, *args)
+}
+```
+
+@tab java
+
+```java
+@MirageBootApplication
+public class Application {
+
+    public static void main(String[] args) {
+        MirageApplication.run(Application.class,args);
+    }
+
+}
+```
+
+::: 
