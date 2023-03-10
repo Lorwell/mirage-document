@@ -1,8 +1,10 @@
 ## 介绍
 
-基于 vertx + springboot（ioc + aop）构建响应式编程框架，支持 kotlin
+基于 vertx 构建响应式编程框架，支持 kotlin
 
 代码仓库地址：https://gitee.com/shacocloud/mirage
+
+详细文档地址：TODO
 
 ## 安装
 
@@ -57,11 +59,11 @@
 **java**
 
 ```java
-@MirageApplication
+@MirageBootApplication
 public class Application {
 
     public static void main(String[] args) {
-        MirageBootApplication.run(Application.class,args);
+        MirageApplication.run(Application.class,args);
     }
 
 }
@@ -70,15 +72,13 @@ public class Application {
 **Kotlin**
 
 ```kotlin
-@MirageApplication
+@MirageBootApplication
 class Application
 
 fun main(args: Array<String>) {
-    MirageBootApplication.run(Application::class.java, *args)
+    MirageApplication.run(Application::class.java, *args)
 }
 ```
-
-> `@MirageApplication`和`MirageBootApplication`本质上等于`@SpringBootApplication`和`SpringApplication`，mirage 定义了自己的注解以方便后续拓展使用
 
 如果你使用`kotlin`那么你还需要添加以下依赖，以获得对 `kotlin`的支持
 
