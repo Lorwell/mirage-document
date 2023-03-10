@@ -173,10 +173,6 @@ public class TestConfiguration {
 
 :::
 
-
-
-
-
 ```mermaid
 graph TB
 
@@ -317,8 +313,292 @@ factories.excludeComponent=
 
 ## 应用环境配置
 
+系统的环境配置提供了2个内置的配置文件，路径都是相对于资源目录，文件不存在则不加载
 
+* 环境配置文件：`environment.yaml`
+  用于定义环境配置信息，可以在其中配置不同环境读取的配置文件
+* 应用配置文件：`application.yaml`
+  用于定义应用配置信息，内置配置文件。即：无论环境配置中是否定义，该文件都会加载
 
+:::info
 
+系统支持3种文件格式，分别是 yaml，json，properties，所以上面的2个配置文件使用 `environment.json`，`environment.properties`，`application.json`，`application.properties` 也可以
+
+:::
+
+### 环境配置文件
+
+在环境配置文件中可以定义不同环境下加载的配置文件，示例如下：
+
+```yaml
+mirage:
+  environment:
+    # 激活的环境
+    active: ${mirage_environment_active:dev}
+    # 配置文件刷新间隔，默认是5秒
+    refresh: 5000
+    # 环境配置集
+    profiles:
+     # 环境名称和 mirage.environment.active 对应
+      - id: dev
+      # 环境存储信息
+        stores:
+          # classpath:// 表示类路径加载
+          - path: classpath://application-dev.yaml
+          # https:// 表示远端加载
+          - path: https://gitee.com/lulihu/mirage-demo/raw/master/mirage-kotlin-demo/src/main/resources/application-dev1.yaml
+            headers:
+              client: mirage demo
+            # file:// 表示文件系统加载，绝对路径
+          - path: file:///opt/app/application-dev2.yaml
+            # optional 如果为 true 表示为可选的，即：文件不存在则忽略，默认为 false 不存在将抛出例外
+            optional: true
+      - id: uat
+        stores:
+          - path: classpath://application-uat.yaml
+          - path: https://gitee.com/lulihu/mirage-demo/raw/master/mirage-kotlin-demo/src/main/resources/application-uat1.yaml
+            headers:
+              client: mirage demo
+          - path: file:///opt/app/application-uat2.yaml
+            optional: true
+```
+
+从以上配置信息示例可以看出，目前系统支持3种配置文件加载方式，分别是
+
+* 类路径加载：使用 `classpath://` 作为路径前缀
+* 文件系统加载：使用 `file://` 作为路径前缀
+* 远端请求加载：使用 `http://`或者`https://` 作为路径前缀，如果使用该方式可以通过 `headers`属性配置请求时携带的自定义头部信息
+
+如果指定配置路径文件有可能不存在，那么可以将 `optional` 属性定义 true，表示为文件不存在则忽略，默认为 false 不存在将抛出例外
+
+::: info
+
+在所有的配置文件信息中，字符串的内容都会被当做表达式内容进行表达式替换，比如：`${mirage_environment_active:dev}` 表示为 如果 mirage_environment_active 配置键的值存在则使用，否则使用 dev 作为值
+
+:::
+
+### 配置文件加载顺序
+
+```mermaid
+graph TB
+
+A(环境配置文件)
+B(应用配置文件)
+C(jvm参数配置)
+D(系统环境配置)
+E(环境配置文件定义的配置)
+
+A-->B-->C-->D-->E
+```
+
+配置的顺序非常重要， 因为它定义了覆盖顺序。对于冲突的key， 后声明的配置中心会覆盖之前的。我们举个例子。 我们有两个配置：
+
+- `A` 提供 `{a:value, b:1}` 配置
+- `B` 提供 `{a:value2, c:2}` 配置
+
+以 A，B 的顺序声明配置，最终配置应该为： `{a:value2, b:1, c:2}` 
+
+如果您将声明的顺序反过来（B，A），那么您会得到 `{a:value, b:1, c:2}` 
+
+### 配置注入
+
+系统提供了一下注解，用于注入配置信息到指定的对象中
+
+::: info
+
+环境配置每隔 `mirage.environment.refresh`重新加载一次配置信息，如果配置发生了变更将发布应用事件 `EnvironmentChangeEvent` ，且所有的配置对象都将被重新注入新的值
+
+:::
+
+#### @ConfigurationProperties
+
+配置属性注解，在对象类上使用了该注解后，该对象的所有**Set方法**都将被视为配置属性的注入点。
+
+示例：
+
+::: code-tabs#language
+
+@tab kotlin
+
+```kotlin
+@ConfigurationProperties(prefix = "mirage.demo")
+class MirageDemoProperties {
+
+    var dev: String = ""
+    var dev1: String = ""
+
+}
+```
+
+@tab java
+
+```java
+@Setter
+@Getter
+@NoArgsConstructor
+@ConfigurationProperties(prefix = "mirage.demo")
+public class MirageDemoProperties {
+
+    private String dev;
+    private String dev1;
+
+}
+```
+
+:::
+
+#### @EnvValue
+
+环境值注解，使用其定义在工厂对象的属性或者**Set方法**上，即可为这个工厂对象注入环境配置信息。
+
+示例：
+
+属性注入
+
+::: code-tabs#language
+
+@tab kotlin
+
+```kotlin
+@Component
+class MirageDemoBean {
+
+    @EnvValue("\${mirage.demo.dev1}")
+    private var dev1: String = ""
+
+}
+```
+
+@tab java
+
+```java
+@Component
+public class MirageDemoBean {
+
+   @EnvValue("${mirage.demo.dev1}")
+   private String dev1;
+
+}
+```
+
+:::
+
+方法注入
+
+::: code-tabs#language
+
+@tab kotlin
+
+```kotlin
+@Component
+class MirageDemoBean {
+    
+    private lateinit var dev1: String
+
+    @EnvValue("\${mirage.demo.dev1}")
+    fun setDev1(dev1: String) {
+        this.dev1 = dev1;
+    }
+
+}
+```
+
+@tab java
+
+```java
+@Component
+public class MirageDemoBean {
+
+   private String dev1;
+
+   @EnvValue("${mirage.demo.dev1}")
+   public void setDev1(String dev1){
+        this.dev1 = dev1;
+   }
+}
+```
+
+:::
+
+::: warning
+
+注意：set 方法必须满足以下几个条件
+
+方法名称必须以 set 为前缀，且 set 的下一个字符大写
+
+方法必须只有一个入参
+
+方法的返回结果必须为 void 或者 Void
+
+:::
 
 ## 应用事件系统
+
+当应用运行到某个阶段事件，将会发出应用事件，工厂对象通过实现 `ApplicationListener` 来定义监听的事件，当该事件发生时将会触发 `ApplicationListener#onApplicationEvent`方法。
+
+示例：
+
+::: code-tabs#language
+
+@tab kotlin
+
+```kotlin
+@Slf4j
+@Component
+class MirageDemoEventBean : CoroutineApplicationListener<EnvironmentChangeEvent> {
+
+    override suspend fun doApplicationEvent(event: EnvironmentChangeEvent) {
+        log.info("配置发生变更...")
+    }
+
+}
+```
+
+@tab java
+
+```java
+@Slf4j
+@Component
+public class MirageDemoEventBean implements ApplicationListener<EnvironmentChangeEvent> {
+
+    @Override
+    public Future<Void> onApplicationEvent(EnvironmentChangeEvent event) {
+        log.info("配置发生变更...");
+        return Future.succeededFuture();
+    }
+}
+```
+
+:::
+
+### 自定义事件
+
+示例：
+
+::: code-tabs#language
+
+@tab kotlin
+
+```kotlin
+// 定义自定义事件对象
+class CustomEvent : ApplicationEvent {
+}
+
+// 发布事件
+MirageHolder.publishEvent(CustomEvent())
+```
+
+@tab java
+
+```java
+// 定义自定义事件对象
+public class CustomEvent implements ApplicationEvent {
+}
+
+// 发布事件
+MirageHolder.publishEvent(new CustomEvent())
+```
+
+:::
+
+所有的事件对象必须继承 `ApplicationEvent` 接口，以表示自己是一个事件对象
