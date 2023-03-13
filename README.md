@@ -2,9 +2,9 @@
 
 基于 vertx 构建响应式编程框架，支持 kotlin
 
-代码仓库地址：https://gitee.com/shacocloud/mirage
+仓库地址：https://gitee.com/shacocloud/mirage
 
-详细文档地址：TODO
+文档地址：https://mirage.shacocloud.cc/
 
 ## 安装
 
@@ -83,9 +83,9 @@ fun main(args: Array<String>) {
 如果你使用`kotlin`那么你还需要添加以下依赖，以获得对 `kotlin`的支持
 
 ```xml
-        <dependency>
-            <groupId>cc.shacocloud</groupId>
-            <artifactId>mirage-kotlin</artifactId>
-        </dependency>
+<dependency>
+    <groupId>cc.shacocloud</groupId>
+    <artifactId>mirage-kotlin</artifactId>
+</dependency>
 ```
 
