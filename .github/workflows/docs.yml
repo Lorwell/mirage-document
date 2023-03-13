@@ -37,7 +37,7 @@ jobs:
         run: pnpm docs:build
 
       - name: Deploy to GitHub Pages
-        uses: Lorwell/mirage-document
+        uses: Lorwell/mirage-document@master
         with:
           # 部署到 gh-pages 分支
           target_branch: gh-pages
