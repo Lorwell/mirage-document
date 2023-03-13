@@ -24,8 +24,6 @@
     </dependencyManagement>
 ```
 
-最新版本：https://s01.oss.sonatype.org/content/repositories/snapshots/cc/shacocloud/mirage-dependencies/
-
 如果你需要使用 SNAPSHOT 相关版本，请使用以下存储库（SNAPSHOT 版本不提交到中央库）：
 
 ```xml
@@ -42,6 +40,10 @@
         </repository>
     </repositories>
 ```
+
+稳定版本：https://central.sonatype.com/artifact/cc.shacocloud/mirage/2.0.1/versions
+
+快照版本：https://s01.oss.sonatype.org/content/repositories/snapshots/cc/shacocloud/mirage/
 
 ## 使用
 

@@ -63,8 +63,6 @@ Mirage 使 Vertx 变得更简单，为 Vertx 提供构建大型应用的基础�
     </build>
 ```
 
-最新版本：https://s01.oss.sonatype.org/content/repositories/snapshots/cc/shacocloud/mirage-dependencies/
-
 如果你需要使用 SNAPSHOT 相关版本，请使用以下存储库（SNAPSHOT 版本不提交到中央库）：
 
 ```xml
@@ -81,6 +79,18 @@ Mirage 使 Vertx 变得更简单，为 Vertx 提供构建大型应用的基础�
     </repository>
 </repositories>
 ```
+
+稳定版本：https://central.sonatype.com/artifact/cc.shacocloud/mirage/2.0.1/versions
+
+快照版本：https://s01.oss.sonatype.org/content/repositories/snapshots/cc/shacocloud/mirage/
+
+::: info 版本说明
+
+版本形式为 A.b.x，A表示的大版本，b表示的是小版本，c表示的是小版本功能修复版本。
+
+大版本通常是大功能迭代时递增，小版本通常是在目前大功能范围内新增功能点时递增。
+
+:::
 
 ## 快速启动
 
