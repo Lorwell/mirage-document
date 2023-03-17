@@ -254,9 +254,7 @@ E----G
 
 ::: warning AOP
 
-需要注意的是：mirage 不支持aop，也不建议您使用，我们认为AOP只会给项目带来更高的复杂度和更高的维护成本以及更差的性能。
-
-我们希望通过一些拓展点的方式来提高系统的可维护性，这就需要开发者了解一些常用的设计模式，这里附上链接：https://refactoringguru.cn/design-patterns
+需要注意的是：mirage 目前不支持aop
 
 :::
 
