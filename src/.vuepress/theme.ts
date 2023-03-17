@@ -12,6 +12,7 @@ export default hopeTheme({
     iconAssets: "iconfont",
     logo: "/logo.svg",
     repo: "https://gitee.com/shacocloud/mirage-document",
+    docsBranch: "master",
     docsDir: "src",
     locales: {
         "/": {
