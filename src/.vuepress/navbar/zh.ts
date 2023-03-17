@@ -3,21 +3,14 @@ import {navbar} from "vuepress-theme-hope";
 export const zhNavbar = navbar([
     "/",
     {
-        text: "项目",
-        prefix: "/zh/v2.0.x/",
+        text: "版本",
+        prefix: "/zh/",
         children: [
             {
-                text: "Mirage Framework",
-                link: "framework/",
+                text: "V2",
+                link: "v2.0.x/",
             },
-            {
-                text: "Mirage Restful",
-                link: "restful/",
-            },
-            {
-                text: "Mirage ORM",
-                link: "orm/",
-            }
+
         ],
     },
 ]);
