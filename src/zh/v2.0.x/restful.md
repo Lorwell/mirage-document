@@ -13,6 +13,7 @@ Mirage 的 restful 框架，其中包含了功能
 * [异常处理器](#异常处理器)
 * [跨域请求配置](#跨域请求配置)
 * [静态资源映射](#静态资源映射)
+* [Restful 配置](#restful配置)
 
 ## 安装
 
@@ -493,3 +494,29 @@ public Object handle(IOException ex) {
 ## 静态资源映射
 
 // TODO
+
+## Restful配置
+
+可以通过自定义配置来定义 restful 一些启动设置，以下是一个配置示例：
+
+```yaml
+mirage:
+  restful:
+    # http server 配置属性
+    httpServerOptions:
+      port: 8080
+      compressionSupported: false
+      compressionLevel: 6
+      maxWebSocketFrameSize: 65536
+    # Verticle 部署的配置属性
+    deploymentOptions: 
+      instances: 10
+    # 请求体处理器配置属性
+    bodyOptions: 
+      handleFileUploads: true
+    # 请求会话处理器配置属性
+    sessionOptions: 
+      sessionCookieName: 'mirage-restful.session'
+```
+
+以上只是Restful的部分配置，如果想要了解全部配置信息，请查看 `MirageRestfulConfigProperties` 对象

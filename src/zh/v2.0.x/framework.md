@@ -309,6 +309,71 @@ factories.excludeComponent=
 * factories.autoConfiguration：为自动装配的一些类
 * factories.excludeComponent：为需要排除的对象类型
 
+### Vertx Verticle组件
+
+mirage 自定义了 `VerticleFactory`，所以 `Vertx` 的 `Verticle` 都可以使用组件的方式存在于 mirage 中，因此我们提供了 `@DeployVerticle` 注解用于定义 `Verticle` 组件，以下是一份示例：
+
+::: code-tabs#language
+
+@tab kotlin
+
+```kotlin
+@Slf4j
+@DeployVerticle(instances = 2)
+class TestVerticle : CoroutineVerticle() {
+
+    companion object {
+        val i = AtomicInteger(0)
+    }
+
+    private var num: Int = -1
+
+    override suspend fun start() {
+        num = i.incrementAndGet()
+        log.info("TestVerticle start $num")
+    }
+
+    override suspend fun stop() {
+        log.info("TestVerticle stop $num")
+    }
+}
+```
+
+@tab java
+
+```java
+@Slf4j
+@DeployVerticle(instances = 2)
+public class TestVerticle extends AbstractVerticle {
+
+    private static final AtomicInteger i = new AtomicInteger(0);
+
+    private Integer num;
+
+    @Override
+    public void start() throws Exception {
+        num = i.incrementAndGet();
+        log.info("TestVerticle start {}", num);
+    }
+
+    @Override
+    public void stop() throws Exception {
+        log.info("TestVerticle stop {}", num);
+
+    }
+}
+```
+
+:::
+
+以上的示例可以得到2个 `TestVerticle` 实例，其启动/关闭时打印的日志中都有对应的序号。
+
+::: info
+
+`@DeployVerticle` 标识类都是原型对象，即每次获取都将创建一个新的对象
+
+:::
+
 ## 应用环境配置
 
 系统的环境配置提供了2个内置的配置文件，路径都是相对于资源目录，文件不存在则不加载
@@ -372,6 +437,8 @@ mirage:
 ::: info
 
 在所有的配置文件信息中，字符串的内容都会被当做表达式内容进行表达式替换，比如：`${mirage_environment_active:dev}` 表示为 如果 mirage_environment_active 配置键的值存在则使用，否则使用 dev 作为值
+
+配置的键可以使用中划线分割字符，例如 `mirage.vertx.event-loop-pool-size` 等效于 `mirage.vertx.eventLoopPoolSize`
 
 :::
 
@@ -526,9 +593,24 @@ public class MirageDemoBean {
 
 方法必须只有一个入参
 
-方法的返回结果必须为 void 或者 Void
-
 :::
+
+### Vertx 配置
+
+通过应用环境配置机制可以基于`MirageVertxProperties`对象配置 `Vertx` 对象的一些属性，以下是一部分配置示例：
+
+```yaml
+mirage:
+  vertx: 
+    eventLoopPoolSize: 2
+    workerPoolSize: 20
+    internalBlockingPoolSize: 20
+    blockedThreadCheckInterval: 1000
+    maxEventLoopExecuteTime: 2000
+    maxWorkerExecuteTime: 60000
+```
+
+
 
 ## 应用事件系统
 
