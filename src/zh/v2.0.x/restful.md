@@ -493,7 +493,44 @@ public Object handle(IOException ex) {
 
 ## 静态资源映射
 
-// TODO
+针对静态资源访问，我们在 `MirageRestfulConfigurer` 中提供了注册处理器的方式完成，以下是一份简单的示例：
+
+::: code-tabs#language
+
+@tab kotlin
+
+```kotlin
+@Component
+class DemoRestfulConfigurer : MirageRestfulConfigurer {
+
+    override fun registerStaticResourceHandler(registry: StaticResourceHandlerRegistry) {
+        registry.addRootHandler("static", *arrayOf("/*"))
+    }
+}
+```
+
+@tab java
+
+```java
+@Component
+public class DemoRestfulConfigurer implements MirageRestfulConfigurer {
+
+    @Override
+    public void registerStaticResourceHandler(StaticResourceHandlerRegistry registry) {
+        registry.addRootHandler("static", "/*");
+    }
+}
+```
+
+:::
+
+以上的示例表示，将类资源下 `static`目录映射到 `/*` 请求下，更多的细节请自行查看。 
+
+::: info
+
+静态资源使用前缀路径匹配，示例：/static/* 以 /static/ 开头的路径的请求都将从目录 webroot 得到响应， 例如，如果请求路径为 static/css/styles.css，则静态服务将在目录 webroot/css/styles.css 中查找文件，您也可以自定义 webroot 为其他目录。
+
+:::
 
 ## Restful配置
 
