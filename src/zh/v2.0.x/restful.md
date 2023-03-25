@@ -504,7 +504,7 @@ public Object handle(IOException ex) {
 class DemoRestfulConfigurer : MirageRestfulConfigurer {
 
     override fun registerStaticResourceHandler(registry: StaticResourceHandlerRegistry) {
-        registry.addRootHandler("static", *arrayOf("/*"))
+        registry.addRootHandler("classpath:static", *arrayOf("/*"))
     }
 }
 ```
@@ -517,7 +517,7 @@ public class DemoRestfulConfigurer implements MirageRestfulConfigurer {
 
     @Override
     public void registerStaticResourceHandler(StaticResourceHandlerRegistry registry) {
-        registry.addRootHandler("static", "/*");
+        registry.addRootHandler("classpath:static", "/*");
     }
 }
 ```
@@ -528,7 +528,7 @@ public class DemoRestfulConfigurer implements MirageRestfulConfigurer {
 
 ::: info
 
-静态资源使用前缀路径匹配，示例：/static/* 以 /static/ 开头的路径的请求都将从目录 webroot 得到响应， 例如，如果请求路径为 static/css/styles.css，则静态服务将在目录 webroot/css/styles.css 中查找文件，您也可以自定义 webroot 为其他目录。
+静态资源使用前缀路径匹配，示例：/static/* 以 /static/ 开头的路径的请求都将从目录 classpath:webroot 得到响应， 例如，如果请求路径为 static/css/styles.css，则静态服务将在目录 classpath:webroot/css/styles.css 中查找文件，您也可以自定义 webroot 为其他目录。
 
 :::
 
