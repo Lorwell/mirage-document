@@ -14,6 +14,8 @@ Mirage 是 海市蜃楼 的英文翻译，为什么起这个名称呢？是因�
 
 Mirage 使 Vertx 变得更简单，为 Vertx 提供构建大型应用的基础框架，针对不同组件基于 `约定大于配置`的方式进行集成，提供简单的使用方式
 
+如果你对 Vertx 还不了解，那么我们建议你先看一下这篇[文档](https://vertx-china.github.io/docs/vertx-core/java/#_in_the_beginning_there_was_vert_x)，了解一下 Vertx 的核心逻辑
+
 * [framework](framework)
 * [restful](restful)
 * [orm](orm)
@@ -96,12 +98,45 @@ Mirage 使 Vertx 变得更简单，为 Vertx 提供构建大型应用的基础�
 
 在你的pom中添加以下依赖
 
+::: code-tabs#language
+
+@tab kotlin
+
 ```xml
-<dependency>
-    <groupId>cc.shacocloud</groupId>
-    <artifactId>mirage-starter</artifactId>
-</dependency>
+<properties>
+    <!-- kotlin 环境设置 -->
+    <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
+    <kotlin.compiler.jvmTarget>11</kotlin.compiler.jvmTarget>
+    <kotlin.version>1.7.22</kotlin.version>
+</properties>
+
+<dependencies>
+    <dependency>
+        <groupId>cc.shacocloud</groupId>
+        <artifactId>mirage-starter</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>cc.shacocloud</groupId>
+        <artifactId>mirage-kotlin</artifactId>
+    </dependency>
+</dependencies>
 ```
+
+@tab java
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>cc.shacocloud</groupId>
+        <artifactId>mirage-starter</artifactId>
+    </dependency>
+</dependencies>
+```
+
+::: 
+
+快速启动代码
 
 ::: code-tabs#language
 

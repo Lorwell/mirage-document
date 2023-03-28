@@ -17,6 +17,13 @@ title: Mirage 打包插件
 @tab kotlin
 
 ```xml
+<properties>
+    <!-- kotlin 环境设置 -->
+    <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
+    <kotlin.compiler.jvmTarget>11</kotlin.compiler.jvmTarget>
+    <kotlin.version>1.7.22</kotlin.version>
+</properties>
+
 <build>
     <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
     <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
