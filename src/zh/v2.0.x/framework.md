@@ -124,6 +124,112 @@ public class TestConfiguration {
 
 默认情况下，优先扫描**启动类的包路径及其子路径中所有定义的工厂对象**，接着将加载 [SPI 机制](#spi-机制) 中的自动装配对象，如果扫描到对象标识着 `@ComponentScan` 注解，则基于该注解定义的路径继续扫描。
 
+#### @Import
+
+在工厂的配置对象（即：`@Configuration`注解标识的对象）上可以使用 `@Import` 注解来导入指定类，结合 `ImportBeanDescriptionRegistrar` 接口可以在运行时添加自定义的 `BeanDescription` 到对象工厂中，以下是一个示例：
+
+**导入普通组件示例：**
+
+::: code-tabs#language
+
+@tab kotlin
+
+```kotlin
+@Component
+class MirageComponent
+
+@Configuration
+@Import(MirageComponent::class)
+class MirageConfiguration
+```
+
+@tab java
+
+```java
+@Component
+public class MirageComponent{
+
+}
+
+@Import(MirageComponent.class)
+@Configuration
+public class MirageConfiguration {
+
+}
+```
+
+:::
+
+**导入BeanDescription的示例：**
+
+::: code-tabs#language
+
+@tab kotlin
+
+```kotlin
+class MirageBeanDefinitionRegistrar : ImportBeanDescriptionRegistrar {
+
+     override fun registerBeanDescriptions( 
+         annotatedMetadata: AnnotatedElementMetadata,
+         registry: BeanDescriptionRegistry,
+         beanKeyLoader: BeanKeyLoader) {
+     // @Import 定义在 @EnableDemo 注解上，目的是可以使用 annotatedMetadata 获取该注解的元数据，以达到作为配置注解的目的
+     // 可以使用 beanKeyLoader 来扫描指定目录或指定类的 BeanKey 作为 BeanDescription 的唯一键
+     // 使用 registry 注入 BeanDescription
+   }
+}
+
+@Target(CLASS)
+@Retention(RUNTIME)
+@Import(MirageBeanDefinitionRegistrar::class)
+annotation class EnableDemo
+
+@EnableDemo
+@Configuration
+public class MirageConfig
+```
+
+@tab java
+
+```java
+public class MirageBeanDefinitionRegistrar implements ImportBeanDescriptionRegistrar {
+
+    public MirageBeanDefinitionRegistrar(){}
+
+    public void registerBeanDescriptions(AnnotatedElementMetadata annotatedMetadata,
+                                         BeanDescriptionRegistry registry,
+                                         BeanKeyLoader beanKeyLoader) {
+     // @Import 定义在 @EnableDemo 注解上，目的是可以使用 annotatedMetadata 获取该注解的元数据，以达到作为配置注解的目的
+     // 可以使用 beanKeyLoader 来扫描指定目录或指定类的 BeanKey 作为 BeanDescription 的唯一键
+     // 使用 registry 注入 BeanDescription
+   }
+}
+
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Import(MirageBeanDefinitionRegistrar.class)
+public @interface EnableDemo {
+
+}
+
+@EnableDemo
+@Configuration
+public class MirageConfig {
+
+}
+```
+
+:::
+
+::: warning
+
+需要注意的是：`ImportBeanDescriptionRegistrar`接口的实现必须存在无参构造函数，将用来初始化该对象。
+
+`ImportBeanDescriptionRegistrar`接口的实现不会添加到对象工厂中，但是支持 `Aware` 接口的注入
+
+:::
+
 ### 对象生命周期
 
 ::: info 作用域

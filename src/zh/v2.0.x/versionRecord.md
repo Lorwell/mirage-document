@@ -7,6 +7,8 @@ title: 版本记录
 * restful 模块静态资源处理器去除枚举，使用资源协议定义映射地址
 * 优化部分代码注释，移除 @Date 
 * 参数验证结果对象 BindingResult 新增 rejectValue 方法用于自定义字段错误
+* 新增 `@Import` 注解，标识在配置类可以导入指定类，[点击跳转至文档](./framework.html#import)
+* 新增 `ImportBeanDescriptionRegistrar` 接口，配合`@Import` 注解使用，可以在运行时注入定制的 `BeanDescription`，[点击跳转至文档](./framework.html#import)
 
 ### v2.0.4
 
