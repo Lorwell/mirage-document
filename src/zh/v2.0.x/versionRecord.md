@@ -11,6 +11,7 @@ title: 版本记录
 * 新增 `ImportBeanDescriptionRegistrar` 接口，配合`@Import` 注解使用，可以在运行时注入定制的 `BeanDescription`，[点击跳转至文档](./framework.html#import)
 * 新增 DateUtil 相关时间工具类（感谢 [hutool](https://hutool.cn/docs/#/) 和 [Apache Commons](https://commons.apache.org/)）
 * 新增类型转换支持的类型（感谢 [hutool](https://hutool.cn/docs/#/)）
+* 修复restful映射问题，参数验证等相关问题
 
 ### v2.0.4
 
