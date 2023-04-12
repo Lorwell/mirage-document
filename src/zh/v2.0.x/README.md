@@ -82,7 +82,7 @@ Mirage 使 Vertx 变得更简单，为 Vertx 提供构建大型应用的基础�
 </repositories>
 ```
 
-稳定版本：https://central.sonatype.com/artifact/cc.shacocloud/mirage/2.0.1/versions
+稳定版本：https://repo1.maven.org/maven2/cc/shacocloud/mirage/
 
 快照版本：https://s01.oss.sonatype.org/content/repositories/snapshots/cc/shacocloud/mirage/
 
