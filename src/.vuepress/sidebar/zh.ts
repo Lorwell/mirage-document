@@ -8,16 +8,16 @@ export const zhSidebar = sidebar({
             link: "/",
         },
         {
+            text: "小白入门指南",
+            link: "/zh/getStarted",
+        },
+        {
             text: "文档",
-            prefix: "zh/v2.0.x/",
+            prefix: "/zh/v2.0.x/",
             children: [
                 {
                     text: "指南",
                     link: "/zh/v2.0.x/",
-                },
-                {
-                    text: "小白入门指南",
-                    link: "getStarted",
                 },
                 {
                     text: "Mirage Framework",
