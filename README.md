@@ -1,6 +1,6 @@
 ## 介绍
 
-基于 vertx 构建响应式编程框架，支持 kotlin
+基于 vertx 构建响应式编程框架，支持 kotlin，致力于让响应式编程变得更简单
 
 仓库地址：https://gitee.com/shacocloud/mirage
 

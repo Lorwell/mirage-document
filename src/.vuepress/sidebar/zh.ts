@@ -16,6 +16,10 @@ export const zhSidebar = sidebar({
                     link: "/zh/v2.0.x/",
                 },
                 {
+                    text: "小白入门指南",
+                    link: "getStarted",
+                },
+                {
                     text: "Mirage Framework",
                     link: "framework",
                 },

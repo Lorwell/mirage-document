@@ -4,7 +4,7 @@ icon: home
 title: Mirage
 heroImage: /logo.svg
 heroText: Mirage
-tagline: Mirage 使 Vertx 变得更简单
+tagline: Mirage 使响应式编程变得更简单
 actions:
   - text: 快速开始 💡
     link: /zh/v2.0.x/
@@ -12,7 +12,7 @@ actions:
 
 features:
   - title: Vert.x
-    details: mirage 让 vertx 变得更简单
+    details: 基于 Vertx 构建的响应式编程框架
     link: https://vertx-china.github.io/
 
   - title: Kotlin
