@@ -79,6 +79,19 @@ Mirage 基于 Vertx 使异步编程变得更简单，为 Vertx 提供构建大�
         <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
     </repository>
 </repositories>
+
+<pluginRepositories>
+    <pluginRepository>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+            <checksumPolicy>warn</checksumPolicy>
+        </snapshots>
+        <id>ossrh-snapshots</id>
+        <name>ossrh-snapshots</name>
+        <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+    </pluginRepository>
+</pluginRepositories>
 ```
 
 稳定版本：https://repo1.maven.org/maven2/cc/shacocloud/mirage/

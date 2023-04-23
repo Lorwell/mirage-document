@@ -2,6 +2,12 @@
 title: 版本记录
 ---
 
+### v2.1.1
+
+* orm 支持（开发中）
+* 新增 actuator 模块对接，应用监控，支持 micrometer-metrics
+* resful 支持 重定向路由处理器
+
 ### v2.0.6
 
 * 升级 vertx 版本至 4.4.1
