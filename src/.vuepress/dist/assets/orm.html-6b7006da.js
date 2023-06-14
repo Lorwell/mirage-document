@@ -1,0 +1,1 @@
+import{_ as e,W as t,X as o,$ as _}from"./framework-c7bcd797.js";const c={},s=_("p",null,"// 敬请期待",-1),n=[s];function r(a,l){return t(),o("div",null,n)}const d=e(c,[["render",r],["__file","orm.html.vue"]]);export{d as default};
